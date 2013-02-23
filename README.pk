@@ -1,0 +1,34 @@
+###############################################################################
+NOTES FOR THE ANDROID BUILD
+---------------------------
+Peter Klavins 13 February 2010
+
+
+Things largely went according to plan, as per README.txt.
+
+Except:
+
+1. Android-NDK wouldn't set up properly under \Program Files (x86), because of
+the ' ' in the directory name.  So, it's been installed under (Cygwin) ~/src.
+From there, it successfully built the ARM mono stuff.
+
+2. Couldn't get mono to build in this environment.  First I had to force it
+to use gcc-3 by editing the configure script after it had been created by
+autogen.sh.  But even then it failed to make, with some problems with the
+stat structure.  I suspect it's a problem building on 64-bit Windows.  In any
+case, the Mono build is only for getting the framework to insert into the
+Android mono application.
+
+3. Couldn't understand how the assets directory was supposed to work.  In its
+original state, there were text files containing links to where the files
+were to be taken from.  (AHA!  Maybe they were supposed to be soft links,
+which didn't unpack correctly with msysgit.)  In any case, without building
+the mono dll's the Android app didn't work anyway.
+
+4. There was some problem with the Eclipse projects.  I had to actually
+create two projects:  MonoBridge and MonoActivity, with MonoActivity linking
+to MonoBridge.  A bit tricky for Eclipse first-timers.
+
+
+However, I successfully built it and uploaded it to the Hero and it at least
+unpacked itself before not running the actual Mono stuff.  Cool!
